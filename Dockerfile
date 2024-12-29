@@ -4,14 +4,19 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-# Install dependencies, including libcurl, oniguruma, and libxml2
+# Update apt and install required dependencies
 RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libcurl4-openssl-dev \
-    && docker-php-ext-install mbstring xml curl zip json
+    pkg-config \
+    libssl-dev \
+    && docker-php-ext-install mbstring xml curl zip json \
+    && apt-get clean
 
+# Expose the application port
 EXPOSE 80
 
+# Start Apache
 CMD ["apache2-foreground"]
 
