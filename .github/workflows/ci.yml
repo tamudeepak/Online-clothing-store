@@ -17,7 +17,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Set up PHP (for your PHP project)
+    # Set up PHP
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
