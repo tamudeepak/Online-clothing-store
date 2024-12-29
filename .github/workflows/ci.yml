@@ -37,12 +37,12 @@ jobs:
     # Build Docker image
     - name: Build Docker image
       run: |
-        docker build -t deepakgurung/online-clothing-store:latest .
+        docker build -t tamudeepak/online-clothing-store:latest .
 
     # Push Docker image to Docker Hub
     - name: Push Docker image
       run: |
-        docker push deepakgurung/online-clothing-store:latest
+        docker push tamudeepak/online-clothing-store:latest
 
     # Optional: Upload build artifact (WAR/JAR)
     - name: Upload build artifact
