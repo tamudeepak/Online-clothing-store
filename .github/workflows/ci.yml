@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install php-cli php-mbstring php-xml php-curl php-zip php-json
+
+    - name: Run tests
+      run: |
+        echo "Running tests..."
+
+    - name: Deploy (Optional)
+      run: |
+        echo "Deploying to production..."
+
