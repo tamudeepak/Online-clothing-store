@@ -13,24 +13,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Checkout code
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Set up PHP (for your PHP project)
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.4'
 
+    # Install dependencies
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install php-cli php-mbstring php-xml php-curl php-zip php-json
 
+    # Run tests
     - name: Run tests
       run: |
         echo "Running tests..."
 
-    - name: Deploy (Optional)
+    # Build Docker image
+    - name: Build Docker image
       run: |
-        echo "Deploying to production..."
+        docker build -t deepakgurung/online-clothing-store:latest .
+
+    # Push Docker image to Docker Hub
+    - name: Push Docker image
+      run: |
+        docker push deepakgurung/online-clothing-store:latest
+
+    # Optional: Upload build artifact (WAR/JAR)
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: path/to/your/build/artifact.war  # Replace with the actual path to WAR/JAR
+
+    # Deploy the app
+    - name: Deploy to production
+      run: |
+        echo "Deploying the application..."
 
