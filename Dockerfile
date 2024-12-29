@@ -4,10 +4,11 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-# Install dependencies, including oniguruma and libxml2
+# Install dependencies, including libcurl, oniguruma, and libxml2
 RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
+    libcurl4-openssl-dev \
     && docker-php-ext-install mbstring xml curl zip json
 
 EXPOSE 80
