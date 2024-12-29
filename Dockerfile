@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
+    libzip-dev \
+    && docker-php-ext-configure zip \
     && docker-php-ext-install mbstring xml curl zip json \
     && apt-get clean
 
