@@ -1,0 +1,19 @@
+{
+    "name": "your-username/online-clothing-store",
+    "description": "Online clothing store project",
+    "type": "project",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "phpunit/phpunit": "^9.5",
+        "phpmailer/phpmailer": "^6.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
+
