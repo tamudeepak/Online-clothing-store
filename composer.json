@@ -1,5 +1,5 @@
 {
-    "name": "your-username/online-clothing-store",
+    "name": "tamudeepak/online-clothing-store",
     "description": "Online clothing store project",
     "type": "project",
     "require": {
@@ -9,7 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "YourNamespace\\": "./"  // This includes the root directory
         }
     },
     "scripts": {
