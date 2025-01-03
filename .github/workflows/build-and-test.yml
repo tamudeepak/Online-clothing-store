@@ -1,0 +1,41 @@
+name: Build and Test Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: Set up PHP
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl unzip
+        if [ -f "composer.json" ]; then \
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+          composer install --no-dev --optimize-autoloader; \
+        fi
+
+    # Step 4: Run unit tests
+    - name: Run tests
+      run: |
+        echo "Running unit tests..."
+        if [ -f "vendor/bin/phpunit" ]; then vendor/bin/phpunit; else echo "No PHPUnit tests found."; fi
+
