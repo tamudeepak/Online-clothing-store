@@ -17,6 +17,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Cache Composer dependencies
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.composer/cache
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
     # Set up PHP
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
@@ -36,6 +45,15 @@ jobs:
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
           composer install --no-dev --optimize-autoloader; \
         fi
+
+    # Cache Docker layers
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/docker-cache
+        key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+        restore-keys: |
+          ${{ runner.os }}-docker-
 
     # Run tests
     - name: Run tests
@@ -57,6 +75,8 @@ jobs:
       with:
         context: .
         push: true
+        cache-from: type=local,src=/tmp/docker-cache
+        cache-to: type=local,dest=/tmp/docker-cache
         tags: ${{ secrets.DOCKER_USERNAME }}/online-clothing-store:latest
 
     # Optional: Upload build artifact
